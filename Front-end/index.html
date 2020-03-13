@@ -11,6 +11,10 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <!-- Google Material Design -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      
   </head>
   <body>
     <nav class="navbar navbar-expand-md navbar-light fixed-top bg-light">
@@ -33,19 +37,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <!-- <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#home"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul> -->
+        <ul class="navbar-nav mr-auto">
+        </ul>
         <!-- <form class="form-inline mt-2 mt-md-0">
           <input
             class="form-control mr-sm-2"
@@ -57,11 +50,28 @@
             Search
           </button>
         </form> -->
+        <a href="#" id="user-account" class="d-flex mr-5">
+          <i class="material-icons text-secondary">
+            account_circle
+          </i>
+          <span id="user-name" class="text-muted">Log Out</span>
+        </a>
+        <a href="#" class="btn btn-success d-flex justify-content-between shopping-cart">
+          <p class="mr-2">$0.00</p>
+          <i class="material-icons">
+            shopping_cart
+            </i>
+        </a>
       </div>
     </nav>
 
-    <main></main>
+    <main>
+    </main>
 
+    <script src="assests/javascript/cartAdapter.js"></script>
+    <script src="assests/javascript/user.js"></script>
+    <script src="assests/javascript/userAdapter.js"></script>
+    <script src="assests/javascript/cart.js"></script>
     <script src="assests/javascript/itemAdapter.js"></script>
     <script src="assests/javascript/Item.js"></script>
     <script src="assests/javascript/index.js"></script>

@@ -14,11 +14,11 @@ class Item {
     const wrapper = document.querySelector(".itemWrapper");
     wrapper.addEventListener("click", e => {
       let elmt = e.target.classList[0];
-
+      e.preventDefault()
       let target = {
         "card-img-top": Item.showPage,
-        btn: Item.createCounterBtn,
-        increment: Item.incrementor
+        btn: this.createCounterBtn,
+        increment: this.incrementor
       };
 
       if (!!target[elmt]) target[elmt](e);
@@ -32,19 +32,30 @@ class Item {
     let currentVal = parseInt(pTag.innerText);
 
     if (incrementBtn.id == "min") {
-      if (--currentVal === 0) {
+      let newValue = --currentVal
+      if (newValue === 0) {
+        Cart.changeBtnValue(e,(total,itemPrice)=> total -= itemPrice)
         const item = Item.findItem(card.id);
         card.outerHTML = Item.itemCard(item);
       } else {
-        pTag.innerText = --currentVal;
+        Cart.changeBtnValue(e,(total,itemPrice)=> total -= itemPrice)
+        pTag.innerText = newValue;
       }
     } else {
-      pTag.innerText = ++currentVal;
+      let newValue = ++currentVal
+      Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
+      pTag.innerText = newValue;
     }
   }
 
+
   static createCounterBtn(e) {
     const divTag = e.target.parentElement;
+    const itemId = e.target.dataset.itemid
+
+    // currentUser.addItemToCart(itemId)
+    Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
+  
     divTag.innerHTML = `
       <div class="d-flex">
         <button type="button" id="min" class="increment btn btn-light">-</button>
@@ -83,7 +94,7 @@ class Item {
             <h5 class="card-title text-center">${item.name}</h5>
             <h5 class="card-text text-center">$${item.price}</h5>
             <div class="text-center mt-4">
-              <a class="btn btn-success" data-itemId="${item.id}">Add To Cart</a>
+              <a class="btn btn-success" data-itemId="${item.id} return false">Add To Cart</a>
             </div>
           </div>
         </div>

@@ -8,8 +8,9 @@ class ItemAdapter {
       .then(resp => resp.json())
       .then(obj => {
         obj.forEach(item => new Item(item));
-        renderItems();
+        renderItems()
       });
+    mainTag.innerHTML = spinner
   }
 
   PostItems(item) {
