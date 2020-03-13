@@ -17,10 +17,6 @@ class User {
         this.cartItems = this.cart.attributes.items
     }
 
- 
-    cartItems(){
-        return Cart.currentCartItems(this)
-    }
 
     addItemToCart(itemId){
         CartAdapter.postToCart(this.currentCart.data.id,itemId)
