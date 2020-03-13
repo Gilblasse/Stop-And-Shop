@@ -3,16 +3,18 @@ class User {
     constructor(userObj){
         this.id = userObj.data.id
         this.carts = userObj.included
-        this.currentCart = null
-        this.cart()
+        this.cart = null
+        this.cartItems = null
+        this.currentCart()
         return this
     }
 
 
-    async cart(){
+    async currentCart(){
         const current_cart = this.carts.find(cart => cart.attributes.checkout == false)
         let result = await CartAdapter.getUpdateCart(current_cart.id)
-        this.currentCart = result
+        this.cart = result.data
+        this.cartItems = this.cart.attributes.items
     }
 
  

@@ -1,11 +1,5 @@
 class Cart {
 
-    // static async currentCart(user){
-    //     const current_cart = user.carts.find(cart => cart.attributes.checkout == false)
-    //     let result = await CartAdapter.getUpdateCart(current_cart.id)
-    //     console.log(result)
-    // }
-
     static currentCartItems(user){
         let cart = Cart.currentCart(user)
         return cart.attributes.items
