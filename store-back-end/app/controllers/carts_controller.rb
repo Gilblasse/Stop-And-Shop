@@ -6,19 +6,30 @@ class CartsController < ApplicationController
 
     def show
         cart = Cart.find(params[:id])
-        render json: CartSerializer.new(cart)
+        render json: CartSerializer.new(cart,cart_options_hash)
     end
 
 
     def create
-        user = User.find(params[:user_id])
-        user.carts.create
+        user = User.find(params[:user_id][:id])
+        cart = user.carts.create
+        render json: CartSerializer.new(cart)
     end
 
     def update
         cart = Cart.find(params[:id])
-        item = Item.find(params[:item_id])
-        CartItem.create(cart: cart, item: item)
+        item = Item.find(params[:item_id][:id])
+        updatedCart = CartItem.addItemToCart(cart,item)
+
         render json: CartSerializer.new(cart)
+    end
+
+
+    private 
+
+    def cart_options_hash
+        options = {}
+        options[:include] = [:items, :'items.cart_items']
+        options
     end
 end

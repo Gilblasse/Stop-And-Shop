@@ -3,6 +3,7 @@ class ItemAdapter {
     this.baseUrl = url;
   }
 
+  // RETRIEVE ALL ITEMS AND DISPLAY THEM IN THE STORE
   fetchItems() {
     fetch(this.baseUrl)
       .then(resp => resp.json())
@@ -10,7 +11,7 @@ class ItemAdapter {
         obj.forEach(item => new Item(item));
         renderItems()
       });
-    mainTag.innerHTML = spinner
+    mainTag.innerHTML = spinner // While Items are being retrieved Spinner Will Appear on Page
   }
 
   PostItems(item) {
@@ -27,4 +28,6 @@ class ItemAdapter {
       .then(resp => resp.json())
       .then(itemObj => console.log(itemObj));
   }
+
+
 }

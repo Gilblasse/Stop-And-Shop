@@ -26,6 +26,38 @@ class Cart {
         }else{
             cartClasses.replace("show-shopping-cart","hide-shopping-cart")
         }
-        
+        Cart.updateShoppingCart()
     }
+
+
+    static updateShoppingCart(){
+        const cartItemsHTML = currentUser.cartItems.map(item => Cart.cartItemDiv(item))
+        cartItemsContainer.innerHTML = cartItemsHTML.join(' ')  
+    }
+
+    static handleShoppingCartEvent(e){
+        if (e.target.className == 'material-icons'){
+            const itemId = e.target.dataset.itemid
+            const cartId = currentUser.cart.id
+    
+            CartItemService.DeleteItemFromCartItems(cartId,itemId)
+        }
+    }
+
+    static cartItemDiv(item){
+        return `
+            <div>
+                <p>
+                    <span class="shopping-cart-item-name">${item.name}</span>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp<span class="text-muted">$${item.price} x ${item.qty}</span> 
+                    <span class="delete-item-bin">
+                        <i class="material-icons" data-itemId="${item.id}">
+                            delete_outline
+                        </i>
+                    </span>
+                </p>
+            </div>
+
+        `
+    }
+      
 }

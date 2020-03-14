@@ -5,21 +5,41 @@ class User {
         this.carts = userObj.included
         this.cart = null
         this.cartItems = null
-        this.currentCart()
+        this.setCurrentCart()
         return this
     }
 
-
-    async currentCart(){
-        const current_cart = this.carts.find(cart => cart.attributes.checkout == false)
-        let result = await CartAdapter.getUpdateCart(current_cart.id)
-        this.cart = result.data
-        this.cartItems = this.cart.attributes.items
+    async setCurrentCart(cart = null){
+        if(!!!cart){
+            const current_cart = this.carts.find(cart => cart.attributes.checkout == false)
+            if (!current_cart){
+                CartAdapter.createNewCart(this)
+            }else{
+                let result = await CartAdapter.getUpdateCart(current_cart.id)
+                this.cart = result.data
+                this.cartItems = this.cart.attributes.items
+            }
+        }else{
+            this.cart = cart.data
+            this.cartItems = this.cart.attributes.items
+            Cart.updateShoppingCart()
+        }
+        
     }
 
+    createCart(){
+        CartAdapter.createNewCart()
+    }
 
-    addItemToCart(itemId){
-        CartAdapter.postToCart(this.currentCart.data.id,itemId)
+    
+    async addItemToCart(itemId){
+        CartAdapter.postToCart(this.cart.id, itemId)
+        .then(res => res.json())
+        .then(cart => {
+            this.cart = cart.data
+            this.cartItems = this.cart.attributes.items
+            Cart.updateShoppingCart()
+        })
     }
 
     logout(){

@@ -20,5 +20,6 @@ items = [
 
 items.each do |item| 
 	name,price,imageUrl = item
-    Item.create(name: name, price: price, qty: Faker::Number.within(range: 1..10), image: imageUrl)
+    Item.create(name: name, price: price, qty: 0, image: imageUrl)
 end
+# Faker::Number.within(range: 1..10)

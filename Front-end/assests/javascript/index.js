@@ -20,6 +20,7 @@ cartSideBar.className += ' hide-shopping-cart'
 
 logo.addEventListener("click", handleLogoEvent);
 cartBtn.addEventListener('click', Cart.sideBar)
+cartSideBar.addEventListener('click', Cart.handleShoppingCartEvent)
 mainTag.addEventListener('click', loginUser)
 logoutBtn.addEventListener('click', handleLogoutEvent)
 
@@ -48,6 +49,8 @@ function handleCartBtnEvent() {
   }
 }
 
+
+// THIS DISPLAYS ALL STORE ITEMS ON THE PAGE
 function renderItems() {
   mainTag.innerHTML = "";
   mainTag.appendChild(Item.wrapedInDomElmts);

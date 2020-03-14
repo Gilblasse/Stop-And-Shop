@@ -10,6 +10,11 @@ class Item {
     Item.all.push(this);
   }
 
+
+
+  // =================================
+  // LISTENS ON ALL STORE ITEM EVENTS
+  // =================================
   static addEventListeners() {
     const wrapper = document.querySelector(".itemWrapper");
     wrapper.addEventListener("click", e => {
@@ -17,13 +22,18 @@ class Item {
       e.preventDefault()
       let target = {
         "card-img-top": Item.showPage,
-        btn: this.createCounterBtn,
+        btn: this.checkItemsQuantity,
         increment: this.incrementor
       };
 
       if (!!target[elmt]) target[elmt](e);
     });
   }
+
+
+
+
+
 
   static incrementor(e) {
     const incrementBtn = e.target;
@@ -48,14 +58,28 @@ class Item {
     }
   }
 
+  static checkItemsQuantity(e){
+    const itemId = e.target.dataset.itemid
+    const selectedItem = Item.findItem(itemId)
+
+    currentUser.addItemToCart(selectedItem)
+    
+
+    const updatedBtn = Item.addItemBtnOrCounter(selectedItem)
+    const btnSection = document.getElementById(itemId).querySelector('.card-body div')
+     
+    btnSection.outerHTML = updatedBtn
+  }
+
+  static createAddBtn(e,item){
+    const card = e.target.offsetParent
+    card.outerHTML = Item.itemCard(item)
+  }
+
 
   static createCounterBtn(e) {
     const divTag = e.target.parentElement;
-    const itemId = e.target.dataset.itemid
-
-    // currentUser.addItemToCart(itemId)
-    Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
-  
+    // Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
     divTag.innerHTML = `
       <div class="d-flex">
         <button type="button" id="min" class="increment btn btn-light">-</button>
@@ -94,10 +118,37 @@ class Item {
             <h5 class="card-title text-center">${item.name}</h5>
             <h5 class="card-text text-center">$${item.price}</h5>
             <div class="text-center mt-4">
-              <a class="btn btn-success" data-itemId="${item.id} return false">Add To Cart</a>
+              <a class="btn btn-success" data-itemId="${item.id}" return false>Add To Cart</a>
             </div>
           </div>
         </div>
       `;
   }
+
+
+  static addItemBtnOrCounter(item) {
+    if (item.qty > 0){
+      return `
+        <div class="d-flex">
+          <button type="button" id="min" data-itemId="${item.id} class="increment btn btn-light">-</button>
+          <p class="flex-grow-1 text-center">${item.qty}</p>
+          <button type="button" id="max" data-itemId="${item.id} class="increment btn btn-light">+</button>
+        </div>
+      `
+    }else{
+      return `
+        <div class="text-center mt-4">
+          <a class="btn btn-success" data-itemId="${item.id}" return false>Add To Cart</a>
+        </div>
+      `
+    }
+  }
+
+
 }
+
+{/* <div class="d-flex">
+        <button type="button" id="min" class="increment btn btn-light">-</button>
+        <p class="flex-grow-1">1</p>
+        <button type="button" id="max" class="increment btn btn-light">+</button>
+      </div> */}
