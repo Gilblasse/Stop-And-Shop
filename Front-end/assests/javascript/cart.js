@@ -39,16 +39,22 @@ class Cart {
         if (e.target.className == 'material-icons'){
             const itemId = e.target.dataset.itemid
             const cartId = currentUser.cart.id
-    
+            
             CartItemService.DeleteItemFromCartItems(cartId,itemId)
         }
     }
 
+    static getItemQty(itemId){
+        const item = currentUser.allCartItems.find(cartItem => cartItem.item_id == itemId)
+        return item.qty
+    }
+
     static cartItemDiv(item){
+        // debugger
         return `
             <div>
                 <p>
-                    <span class="shopping-cart-item-name">${item.name}</span>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp<span class="text-muted">$${item.price} x ${item.qty}</span> 
+                    <span class="shopping-cart-item-name">${item.name}</span>&nbsp&nbsp&nbsp - &nbsp&nbsp&nbsp<span class="text-muted">$${item.price} x ${Cart.getItemQty(item.id)}</span> 
                     <span class="delete-item-bin">
                         <i class="material-icons" data-itemId="${item.id}">
                             delete_outline

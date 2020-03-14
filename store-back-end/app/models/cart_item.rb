@@ -5,16 +5,16 @@ class CartItem < ApplicationRecord
 
     def self.addItemToCart(cart,item)
         cartItem = self.find_by_cart_and_item(cart,item)
-
+    
         if cartItem.empty?
-            self.create(cart: cart, item: item)
-            item.qty += 1
-            item.save
+            cartItem = self.create(cart: cart, item: item)
+            cartItem.qty += 1
+            cartItem.save
         else  
-            item.qty += 1
-            item.save
+            cartItem.first.qty += 1
+            cartItem.first.save
         end
-        
+
         cart
     end
 
@@ -22,13 +22,13 @@ class CartItem < ApplicationRecord
     def self.deleteItemFromCart(cart,item)
         cartItem = self.find_by_cart_and_item(cart,item).first
         
-        if cartItem
-            if item.qty > 1
-                item.qty -= 1
-                item.save
+        if !!cartItem
+            if cartItem.qty > 1
+                cartItem.qty -= 1
+                cartItem.save
             else  
-                item.qty -= 1
-                item.save
+                cartItem.qty -= 1
+                cartItem.save
                 self.destroy(cartItem.id)
             end
         end

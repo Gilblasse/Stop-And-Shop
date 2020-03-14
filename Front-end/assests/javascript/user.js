@@ -5,6 +5,7 @@ class User {
         this.carts = userObj.included
         this.cart = null
         this.cartItems = null
+        this.allCartItems = null
         this.setCurrentCart()
         return this
     }
@@ -18,10 +19,12 @@ class User {
                 let result = await CartAdapter.getUpdateCart(current_cart.id)
                 this.cart = result.data
                 this.cartItems = this.cart.attributes.items
+                this.allCartItems = this.cart.attributes.cart_items
             }
         }else{
             this.cart = cart.data
             this.cartItems = this.cart.attributes.items
+            this.allCartItems = this.cart.attributes.cart_items
             Cart.updateShoppingCart()
         }
         
@@ -30,7 +33,6 @@ class User {
     createCart(){
         CartAdapter.createNewCart()
     }
-
     
     async addItemToCart(itemId){
         CartAdapter.postToCart(this.cart.id, itemId)
@@ -38,6 +40,7 @@ class User {
         .then(cart => {
             this.cart = cart.data
             this.cartItems = this.cart.attributes.items
+            this.allCartItems = this.cart.attributes.cart_items
             Cart.updateShoppingCart()
         })
     }

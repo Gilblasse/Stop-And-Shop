@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_184908) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id"
     t.integer "item_id"
+    t.integer "qty", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -30,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_184908) do
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.float "price"
-    t.integer "qty"
+    t.integer "stock"
     t.string "image"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

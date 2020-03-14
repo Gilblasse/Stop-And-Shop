@@ -20,7 +20,7 @@ class CartsController < ApplicationController
         cart = Cart.find(params[:id])
         item = Item.find(params[:item_id][:id])
         updatedCart = CartItem.addItemToCart(cart,item)
-
+        
         render json: CartSerializer.new(cart)
     end
 

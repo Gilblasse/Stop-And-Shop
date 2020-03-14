@@ -11,6 +11,7 @@ class CartItemService {
             },
             body: JSON.stringify({cartId})
         }
+        // debugger
         fetch(`${this.baseUrl}/${itemId}`, configObj)
         .then(res => res.json())
         .then(cart => currentUser.setCurrentCart(cart))

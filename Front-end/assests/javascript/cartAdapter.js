@@ -10,7 +10,7 @@ class CartAdapter {
             },
             body: JSON.stringify({item_id})
         }
-
+        
        return fetch(`${this.baseUrl}/${cart_id}`, configObj)
     }
 
