@@ -20,6 +20,7 @@ class User {
                 this.cart = result.data
                 this.cartItems = this.cart.attributes.items
                 this.allCartItems = this.cart.attributes.cart_items
+                Cart.updateShoppingCart()
             }
         }else{
             this.cart = cart.data
@@ -30,9 +31,6 @@ class User {
         
     }
 
-    createCart(){
-        CartAdapter.createNewCart()
-    }
     
     async addItemToCart(itemId){
         CartAdapter.postToCart(this.cart.id, itemId)
@@ -44,6 +42,7 @@ class User {
             Cart.updateShoppingCart()
         })
     }
+
 
     logout(){
         localStorage.removeItem("user_id")

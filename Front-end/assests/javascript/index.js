@@ -40,6 +40,7 @@ function handleLogoutEvent() {
 function handleLogoEvent(){
   if(currentUser){
     renderItems();
+    Cart.updateShoppingCart()
   }
 }
 
@@ -56,6 +57,9 @@ function renderItems() {
   mainTag.appendChild(Item.wrapedInDomElmts);
   Item.addEventListeners();
   mainTag.appendChild(cartSideBar)
+  // Cart.updateShoppingCart()
+  // debugger
+  
 }
 
 

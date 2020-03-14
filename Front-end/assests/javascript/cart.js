@@ -32,7 +32,8 @@ class Cart {
 
     static updateShoppingCart(){
         const cartItemsHTML = currentUser.cartItems.map(item => Cart.cartItemDiv(item))
-        cartItemsContainer.innerHTML = cartItemsHTML.join(' ')  
+        cartItemsContainer.innerHTML = cartItemsHTML.join(' ') 
+        Item.updateItemCard()
     }
 
     static handleShoppingCartEvent(e){
@@ -50,7 +51,6 @@ class Cart {
     }
 
     static cartItemDiv(item){
-        // debugger
         return `
             <div>
                 <p>
