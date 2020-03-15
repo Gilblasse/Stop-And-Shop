@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_03_10_184908) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.integer "total"
+    t.float "total", default: 0.0
     t.integer "user_id"
     t.boolean "checkout", default: false
     t.datetime "created_at", precision: 6, null: false

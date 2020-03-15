@@ -22,10 +22,12 @@ class Item {
       e.preventDefault()
       let target = {
         "card-img-top": Item.showPage,
-        btn: this.incrementor,
-        increment: this.incrementor,
-        decrementor: Item.decrementor 
+        btn: Item.incrementor,
+        increment: Item.incrementor,
+        decrementor: Item.decrementor,
+        "material-icons": Item.incrementOrDecrement
       };
+      // debugger
       if (!!target[elmt]) target[elmt](e);
     });
   }
@@ -33,19 +35,26 @@ class Item {
 
 
 
+static incrementOrDecrement(e){
+  const parentBtn = e.target.parentElement
+  const parentClass = parentBtn.classList[0]
 
+  const execute = {
+    increment: Item.incrementor,
+    decrementor: Item.decrementor,
+  }
+  execute[parentClass](parentBtn);
+}
 
   static decrementor(e) {
-    const itemId = e.target.dataset.itemid
+    const btn = e.target || e
     const cartId = currentUser.cart.id
-    CartItemService.DeleteItemFromCartItems(cartId,itemId)
+    CartItemService.DeleteItemFromCartItems(cartId,btn.dataset.itemid)
   }
 
   static incrementor(e){
-    const itemId = e.target.dataset.itemid
-    const selectedItem = Item.findItem(itemId)
-    currentUser.addItemToCart(selectedItem)
-    
+    const btn = e.target || e
+    currentUser.addItemToCart(btn.dataset.itemid)
   }
 
   static updateItemCard(){
@@ -85,17 +94,17 @@ class Item {
   }
 
 
-  static createCounterBtn(e) {
-    const divTag = e.target.parentElement;
-    // Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
-    divTag.innerHTML = `
-      <div class="d-flex">
-        <button type="button" id="min" class="decrementor btn btn-light">-</button>
-        <p class="flex-grow-1">1</p>
-        <button type="button" id="max" class="increment btn btn-light">+</button>
-      </div>
-    `;
-  }
+  // static createCounterBtn(e) {
+  //   const divTag = e.target.parentElement;
+  //   // Cart.changeBtnValue(e,(total,itemPrice)=> total += itemPrice)
+  //   divTag.innerHTML = `
+  //     <div class="d-flex">
+  //       <button type="button" id="min" class="decrementor btn btn-light">-</button>
+  //       <p class="flex-grow-1">1</p>
+  //       <button type="button" id="max" class="increment btn btn-light">+</button>
+  //     </div>
+  //   `;
+  // }
 
   static findItem(id) {
     return Item.all.find(item => item.id == id);
@@ -142,9 +151,17 @@ class Item {
     if (itemQTY > 0){
       return `
         <div class="d-flex">
-          <button type="button" id="min" data-itemId="${item.id}" class="decrementor btn btn-light">-</button>
-          <p class="flex-grow-1 text-center">${itemQTY}</p>
-          <button type="button" id="max" data-itemId="${item.id}" class="increment btn btn-light">+</button>
+          <button type="button" id="min" data-itemId="${item.id}" class="decrementor btn btn-outline-secondary btn-lg">
+            <i class="material-icons">
+              remove
+            </i>
+          </button>
+          <p class="flex-grow-1 text-center item-qty">${itemQTY}</p>
+          <button type="button" id="max" data-itemId="${item.id}" class="increment btn btn-outline-secondary btn-lg">
+            <i class="material-icons">
+              add
+            </i>
+          </button>
         </div>
       `
     }else{

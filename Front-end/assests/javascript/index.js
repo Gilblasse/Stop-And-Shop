@@ -4,6 +4,8 @@ const logo = document.querySelector(".logo");
 const cartBtn = document.querySelector('.shopping-cart')
 const cartSideBar = document.createElement('aside')
 const cartItemsContainer = document.createElement('section')
+const checkoutBtn = document.createElement('button')
+const afterCheckout = document.createElement('a')
 const loginform = document.createElement('div')
 const logoutBtn = document.querySelector('#user-account')
 const spinner = '<div id="spinner"><img src="https://help.presentations2go.eu/LTI/lib/Spinner.gif"></div>'
@@ -13,21 +15,33 @@ let user_id = localStorage.getItem('user_id')
 loginform.setAttribute('class',"form-group w-25 mx-auto")
 
 cartSideBar.insertAdjacentHTML('afterbegin', '<h3>Shopping Cart: </h3>')
+
 cartItemsContainer.setAttribute('class','cart-items-container')
 cartSideBar.setAttribute('class','shoppingCart-sideBar')
+checkoutBtn.setAttribute('class','btn btn-success btn-block w-75 mx-auto')
+checkoutBtn.setAttribute('id','checkout')
+checkoutBtn.innerText = 'Checkout'
+
 cartSideBar.appendChild(cartItemsContainer)
 cartSideBar.className += ' hide-shopping-cart'
+cartSideBar.appendChild(checkoutBtn)
+
+
+afterCheckout.setAttribute('class','btn btn-primary btn-sm')
+afterCheckout.setAttribute('id','afterCheckout')
+afterCheckout.innerText = 'Continue Shopping ?'
 
 logo.addEventListener("click", handleLogoEvent);
+// afterCheckout.addEventListener('click', handleLogoEvent)
 cartBtn.addEventListener('click', Cart.sideBar)
 cartSideBar.addEventListener('click', Cart.handleShoppingCartEvent)
 mainTag.addEventListener('click', loginUser)
 logoutBtn.addEventListener('click', handleLogoutEvent)
+checkoutBtn.addEventListener('click', Cart.handleCheckoutEvent)
 
 UserAdapter.getUser(user_id)
 
-
-
+            
 
 
 
@@ -39,8 +53,10 @@ function handleLogoutEvent() {
 
 function handleLogoEvent(){
   if(currentUser){
+    Cart.sideBar();
     renderItems();
     Cart.updateShoppingCart()
+    
   }
 }
 

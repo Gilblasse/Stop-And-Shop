@@ -10,7 +10,7 @@ class CartAdapter {
             },
             body: JSON.stringify({item_id})
         }
-        
+        // debugger
        return fetch(`${this.baseUrl}/${cart_id}`, configObj)
     }
 
@@ -28,6 +28,20 @@ class CartAdapter {
        fetch(`${this.baseUrl}`, configObj)
        .then(res => res.json())
        .then(cart => currentUser.setCurrentCart(cart))
+    }
+
+
+    static checkoutRequest(cart_id){
+        const configObj = {
+            method: "PATCH",
+            headers: {
+                'Content-Type': 'application/json',
+                Accepts: 'application/json'
+            },
+            body: JSON.stringify({cart_id})
+        }
+
+        return fetch(`${this.baseUrl}/${cart_id}/checkout/`, configObj)
     }
 
 

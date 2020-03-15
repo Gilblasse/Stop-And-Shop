@@ -15,6 +15,8 @@ class CartItem < ApplicationRecord
             cartItem.first.save
         end
 
+        cart.total = (cart.total + item.price).round(2)
+        cart.save
         cart
     end
 
@@ -32,7 +34,13 @@ class CartItem < ApplicationRecord
                 self.destroy(cartItem.id)
             end
         end
-    
+
+        if cart.total != 0
+            cart.total = (cart.total - item.price).round(2)
+            cart.save
+        end
+        
+        cart
     end
 
     def self.find_by_cart_and_item(cart,item)

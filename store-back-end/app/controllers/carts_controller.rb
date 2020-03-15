@@ -18,11 +18,22 @@ class CartsController < ApplicationController
 
     def update
         cart = Cart.find(params[:id])
-        item = Item.find(params[:item_id][:id])
-        updatedCart = CartItem.addItemToCart(cart,item)
-        
+        item = Item.find(params[:item_id])
+        CartItem.addItemToCart(cart,item)
+
         render json: CartSerializer.new(cart)
     end
+
+
+
+    def checkout
+        old_cart = Cart.find(params[:id])
+        old_cart.checkout = true
+        old_cart.save
+        new_cart = old_cart.user.carts.create
+        render json: CartSerializer.new(new_cart)
+    end
+
 
 
     private 

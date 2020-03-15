@@ -2,6 +2,7 @@ class User {
 
     constructor(userObj){
         this.id = userObj.data.id
+        this.email = userObj.data.attributes.email
         this.carts = userObj.included
         this.cart = null
         this.cartItems = null
@@ -11,7 +12,7 @@ class User {
     }
 
     async setCurrentCart(cart = null){
-        if(!!!cart){
+        if(!cart){
             const current_cart = this.carts.find(cart => cart.attributes.checkout == false)
             if (!current_cart){
                 CartAdapter.createNewCart(this)
@@ -41,6 +42,7 @@ class User {
             this.allCartItems = this.cart.attributes.cart_items
             Cart.updateShoppingCart()
         })
+
     }
 
 
@@ -48,6 +50,8 @@ class User {
         localStorage.removeItem("user_id")
         currentUser = null
         mainTag.innerHTML = userLoginform()
+        const cartTotalPTag = cartBtn.querySelector('p');
+        cartTotalPTag.innerText = `$0.00`
     }
 
 
