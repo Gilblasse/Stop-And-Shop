@@ -4,6 +4,10 @@ nav a img.logo {
   width: 12rem;
 }
 
+.main-nav{
+  background-color: #fff;
+}
+
 .navbar-nav a {
   margin-top: 1rem;
   font-size: 1.15rem;
@@ -112,6 +116,7 @@ main {
   flex-wrap: wrap;
   max-width: 1130px;
   margin: 0 auto;
+  padding-top: 5rem;
 }
 .itemCard {
   width: 18rem;
@@ -132,4 +137,9 @@ main {
 
 .afterCheckoutBtn{
   color: #fff;
+}
+
+.sort-menu-bar{
+  margin-top: 5.2rem;
+  background-color: #e3f2fd;
 }

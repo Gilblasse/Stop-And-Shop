@@ -6,11 +6,15 @@ const cartSideBar = document.createElement('aside')
 const cartItemsContainer = document.createElement('section')
 const checkoutBtn = document.createElement('button')
 const afterCheckout = document.createElement('a')
+const sortMenuBar = document.querySelector('.sort-menu-bar')
 const loginform = document.createElement('div')
 const logoutBtn = document.querySelector('#user-account')
 const spinner = '<div id="spinner"><img src="https://help.presentations2go.eu/LTI/lib/Spinner.gif"></div>'
 let currentUser = null
 let user_id = localStorage.getItem('user_id')
+
+const itemContainer = document.createElement("div");
+itemContainer.setAttribute("class", "itemWrapper");
 
 loginform.setAttribute('class',"form-group w-25 mx-auto")
 
@@ -38,6 +42,7 @@ cartSideBar.addEventListener('click', Cart.handleShoppingCartEvent)
 mainTag.addEventListener('click', loginUser)
 logoutBtn.addEventListener('click', handleLogoutEvent)
 checkoutBtn.addEventListener('click', Cart.handleCheckoutEvent)
+sortMenuBar.addEventListener('click', Item.handleSortEvent)
 
 UserAdapter.getUser(user_id)
 

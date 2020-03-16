@@ -10,7 +10,47 @@ class Item {
     Item.all.push(this);
   }
 
+  static highestPrice(){
+    const items = Item.all.slice()
+    const highestPricedItems = items.sort((b,a) => {
+      if(a.price > b.price) return 1
+      if(a.price < b.price) return -1
+      return 0
+    })
+    Item.renderSortedObj(highestPricedItems)
+  }
 
+  static lowestPrice(){
+    const items = Item.all.slice()
+    const lowestPricedItems = items.sort((a,b) => {
+      if(a.price > b.price) return 1
+      if(a.price < b.price) return -1
+      return 0
+    })
+    Item.renderSortedObj(lowestPricedItems)
+  }
+
+  static normal(){
+    Item.renderSortedObj(Item.all)
+  }
+
+  static renderSortedObj(obj){
+    const itemsWithElmts = obj.map(item => Item.itemCard(item))
+    itemContainer.innerHTML = itemsWithElmts.join(" ");
+  }
+
+
+  static handleSortEvent(e){
+    const type = e.target.classList[2]
+    const sort = {
+      "highPriced": Item.highestPrice,
+      "lowPriced": Item.lowestPrice,
+      "normal": Item.normal
+    }
+  debugger
+    if(!!sort[type]) sort[type]();
+    Cart.updateShoppingCart()
+  }
 
   // =================================
   // LISTENS ON ALL STORE ITEM EVENTS
@@ -121,13 +161,12 @@ static incrementOrDecrement(e){
  
 
   static get wrapedInDomElmts() {
-    const itemContainer = document.createElement("div");
-    itemContainer.setAttribute("class", "itemWrapper");
-
     const itemsWithElmts = Item.all.map(item => Item.itemCard(item));
     itemContainer.innerHTML = itemsWithElmts.join(" ");
     return itemContainer;
   }
+
+  
 
   static itemCard(item) {
     return `
